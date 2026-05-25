@@ -1,5 +1,5 @@
 import { PexelsPhoto } from '../api/pexels';
-import { Download, Maximize2 } from 'lucide-react';
+import { Maximize2 } from 'lucide-react';
 import './WallpaperCard.css';
 
 interface WallpaperCardProps {

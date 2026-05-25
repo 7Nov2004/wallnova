@@ -1,18 +1,13 @@
 .wallpaper-card {
   position: relative;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   cursor: pointer;
   break-inside: avoid;
   margin-bottom: 24px;
   transform: translateZ(0);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.wallpaper-card:hover {
-  transform: translateY(-4px) scale(1.02);
-  z-index: 10;
+  box-shadow: var(--shadow-md);
+  min-height: 200px;
 }
 
 .wallpaper-image {
@@ -20,7 +15,50 @@
   height: auto;
   display: block;
   object-fit: cover;
-  transition: opacity 0.3s ease;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.wallpaper-image.loaded {
+  opacity: 1;
+}
+
+.card-skeleton {
+  position: absolute;
+  inset: 0;
+}
+
+.card-badges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  backdrop-filter: blur(8px);
+  color: white;
+}
+
+.badge-4k {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+}
+
+.badge-hd {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.badge-amoled {
+  background: #000000;
+  border: 1px solid #333;
 }
 
 .wallpaper-overlay {
@@ -28,8 +66,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 24px 16px 16px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+  padding: 32px 16px 16px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -42,32 +80,52 @@
 }
 
 .wallpaper-info .photographer {
+  font-family: var(--font-heading);
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: #fff;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.wallpaper-actions {
+  display: flex;
+  gap: 8px;
 }
 
 .action-btn {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(4px);
-  padding: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 10px;
   border-radius: 50%;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .action-btn:hover {
-  background: rgba(255, 255, 255, 0.4);
-  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.15);
 }
 
 @media (max-width: 768px) {
+  .wallpaper-card {
+    margin-bottom: 16px;
+  }
   .wallpaper-overlay {
     opacity: 1;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+    padding: 24px 12px 12px;
+  }
+  .action-btn {
+    padding: 12px; /* Larger touch target for mobile */
+    background: rgba(255, 255, 255, 0.25);
+  }
+  .action-btn svg {
+    width: 20px;
+    height: 20px;
   }
 }

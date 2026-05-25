@@ -1,18 +1,27 @@
 .masonry-grid {
-  column-count: 3;
+  column-count: 4;
   column-gap: 24px;
   width: 100%;
+}
+
+@media (max-width: 1440px) {
+  .masonry-grid {
+    column-count: 3;
+    column-gap: 20px;
+  }
 }
 
 @media (max-width: 1024px) {
   .masonry-grid {
     column-count: 2;
+    column-gap: 16px;
   }
 }
 
 @media (max-width: 600px) {
   .masonry-grid {
     column-count: 1;
+    column-gap: 0;
   }
 }
 

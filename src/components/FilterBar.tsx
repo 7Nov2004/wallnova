@@ -1,5 +1,6 @@
-import './FilterBar.css';
 import { Monitor, Smartphone, LayoutGrid } from 'lucide-react';
+import { motion } from 'framer-motion';
+import './FilterBar.css';
 
 interface FilterBarProps {
   currentCategory: string;
@@ -8,24 +9,31 @@ interface FilterBarProps {
   onOrientationChange: (ori: string) => void;
 }
 
-const CATEGORIES = ['All', 'Nature', 'Abstract', 'Minimal', 'City', 'Space', 'Dark', 'Cyberpunk'];
+const CATEGORIES = ['All', 'Nature', 'Abstract', 'Minimal', 'City', 'Space', 'Dark', 'Cyberpunk', 'Aesthetic', 'Neon'];
 
 const FilterBar = ({ currentCategory, currentOrientation, onCategoryChange, onOrientationChange }: FilterBarProps) => {
   return (
     <div className="filter-bar">
-      <div className="categories-scroll">
+      <div className="categories-scroll glass-panel">
         {CATEGORIES.map((cat) => (
           <button
             key={cat}
             className={`filter-btn ${currentCategory === cat ? 'active' : ''}`}
             onClick={() => onCategoryChange(cat)}
           >
-            {cat}
+            {currentCategory === cat && (
+              <motion.div
+                layoutId="active-pill"
+                className="active-pill-bg"
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              />
+            )}
+            <span className="filter-text">{cat}</span>
           </button>
         ))}
       </div>
       
-      <div className="device-filters">
+      <div className="device-filters glass-panel">
         <button
           className={`icon-btn ${currentOrientation === 'all' ? 'active' : ''}`}
           onClick={() => onOrientationChange('all')}

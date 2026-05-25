@@ -9,45 +9,67 @@
 
 .categories-scroll {
   display: flex;
-  gap: 12px;
+  padding: 6px;
+  gap: 4px;
   overflow-x: auto;
-  padding-bottom: 8px;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
+  border-radius: var(--radius-full);
 }
 
 .categories-scroll::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 
 .filter-btn {
-  padding: 8px 16px;
-  border-radius: var(--radius-xl);
-  background: var(--bg-secondary);
-  border: 1px solid var(--glass-border);
+  position: relative;
+  padding: 8px 20px;
+  border-radius: var(--radius-full);
   color: var(--text-secondary);
   white-space: nowrap;
-  font-size: 0.9rem;
-  transition: var(--transition);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  z-index: 1;
 }
 
 .filter-btn:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.05);
 }
 
 .filter-btn.active {
-  background: var(--text-primary);
   color: var(--bg-primary);
-  border-color: var(--text-primary);
+}
+
+[data-theme='light'] .filter-btn.active {
+  color: #ffffff;
+}
+
+.filter-text {
+  position: relative;
+  z-index: 2;
+}
+
+.active-pill-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--text-primary);
+  border-radius: var(--radius-full);
+  z-index: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme='light'] .active-pill-bg {
+  background: var(--accent);
 }
 
 .device-filters {
   display: flex;
-  gap: 8px;
-  background: var(--bg-secondary);
-  padding: 4px;
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--glass-border);
+  gap: 4px;
+  padding: 6px;
+  border-radius: var(--radius-full);
 }
 
 .icon-btn {
@@ -62,10 +84,23 @@
 
 .icon-btn:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--glass-hover);
 }
 
 .icon-btn.active {
   background: var(--accent);
   color: white;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+@media (max-width: 768px) {
+  .filter-bar {
+    gap: 16px;
+  }
+  .categories-scroll {
+    width: 100%;
+  }
+  .device-filters {
+    margin-left: auto;
+  }
 }

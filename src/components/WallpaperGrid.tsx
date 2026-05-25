@@ -20,9 +20,18 @@ const WallpaperGrid = ({ photos, loading, onPhotoClick, hasMore, loadMore }: Wal
       </div>
       
       {loading && (
-        <div className="loading-state">
-          <div className="spinner"></div>
-          <p>Loading premium wallpapers...</p>
+        <div className="masonry-grid" style={{ marginTop: photos.length > 0 ? '24px' : '0' }}>
+          {[...Array(6)].map((_, i) => (
+            <div 
+              key={`skeleton-${i}`} 
+              className="skeleton" 
+              style={{ 
+                height: `${Math.floor(Math.random() * (400 - 250 + 1) + 250)}px`, 
+                borderRadius: 'var(--radius-lg)',
+                marginBottom: '24px'
+              }} 
+            />
+          ))}
         </div>
       )}
 

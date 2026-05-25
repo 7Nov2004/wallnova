@@ -89,20 +89,8 @@ const PreviewModal = ({ photo, onClose }: PreviewModalProps) => {
     }
   };
 
-  const handleNativeShare = async () => {
-    if (photo && navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Check out this awesome wallpaper from WallNova!',
-          text: 'Found this amazing wallpaper on WallNova.',
-          url: photo.url,
-        });
-      } catch (err) {
-        console.log('Error sharing:', err);
-      }
-    } else {
-      setShowShareMenu(!showShareMenu);
-    }
+  const handleNativeShare = () => {
+    setShowShareMenu(!showShareMenu);
   };
 
   const shareUrl = encodeURIComponent(photo?.url || '');

@@ -1,3 +1,5 @@
+import { Wallpaper } from '../types';
+
 export interface PexelsPhoto {
   id: number;
   width: number;
@@ -37,18 +39,38 @@ const headers = {
   Authorization: API_KEY,
 };
 
-export const fetchCuratedPhotos = async (page = 1, perPage = 30): Promise<PexelsResponse> => {
+const mapToWallpaper = (photo: PexelsPhoto): Wallpaper => ({
+  id: `pexels-${photo.id}`,
+  width: photo.width,
+  height: photo.height,
+  url: photo.url,
+  photographer: photo.photographer,
+  photographer_url: photo.photographer_url,
+  avg_color: photo.avg_color || '#cccccc',
+  src: {
+    original: photo.src.original,
+    large2x: photo.src.large2x,
+    medium: photo.src.medium,
+  },
+  alt: photo.alt || 'Pexels photo',
+  provider: 'pexels',
+  type: 'photo',
+});
+
+export const fetchCuratedPhotos = async (page = 1, perPage = 30): Promise<{ photos: Wallpaper[] }> => {
   const response = await fetch(`${BASE_URL}/curated?page=${page}&per_page=${perPage}`, { headers });
   if (!response.ok) throw new Error('Failed to fetch curated photos');
-  return response.json();
+  const data: PexelsResponse = await response.json();
+  return { photos: data.photos.map(mapToWallpaper) };
 };
 
-export const searchPhotos = async (query: string, page = 1, perPage = 30, orientation?: 'landscape' | 'portrait' | 'square'): Promise<PexelsResponse> => {
+export const searchPhotos = async (query: string, page = 1, perPage = 30, orientation?: 'landscape' | 'portrait' | 'square'): Promise<{ photos: Wallpaper[] }> => {
   let url = `${BASE_URL}/search?query=${encodeURIComponent(query)}&page=${page}&per_page=${perPage}`;
   if (orientation) {
     url += `&orientation=${orientation}`;
   }
   const response = await fetch(url, { headers });
   if (!response.ok) throw new Error('Failed to fetch searched photos');
-  return response.json();
+  const data: PexelsResponse = await response.json();
+  return { photos: data.photos.map(mapToWallpaper) };
 };

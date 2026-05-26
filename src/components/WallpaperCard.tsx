@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { PexelsPhoto } from '../api/pexels';
-import { Maximize2, Heart, Download } from 'lucide-react';
+import { Wallpaper } from '../types';
+import { Maximize2, Heart, Download, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useStore } from '../store';
 import './WallpaperCard.css';
 
 interface WallpaperCardProps {
-  photo: PexelsPhoto;
-  onClick: (photo: PexelsPhoto) => void;
+  photo: Wallpaper;
+  onClick: (photo: Wallpaper) => void;
 }
 
 const WallpaperCard = ({ photo, onClick }: WallpaperCardProps) => {
@@ -21,6 +21,7 @@ const WallpaperCard = ({ photo, onClick }: WallpaperCardProps) => {
 
   const is4K = photo.width >= 3840;
   const isHD = photo.width >= 1920 && !is4K;
+  const isVideo = photo.type === 'video';
   
   // Basic heuristic for AMOLED (very dark avg color)
   const isAmoled = photo.avg_color.toLowerCase().match(/^#(00|01|02|03|04|05|06|07|08|09|1a|1b|1c)/);
@@ -33,12 +34,13 @@ const WallpaperCard = ({ photo, onClick }: WallpaperCardProps) => {
   const handleDownload = async (e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      const response = await fetch(photo.src.original);
+      const urlToDownload = isVideo && photo.videoUrl ? photo.videoUrl : photo.src.original;
+      const response = await fetch(urlToDownload);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `wallnova-${photo.id}.jpg`;
+      a.download = `wallnova-${photo.id}.${isVideo ? 'mp4' : 'jpg'}`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -47,6 +49,11 @@ const WallpaperCard = ({ photo, onClick }: WallpaperCardProps) => {
       addDownload(photo);
     } catch (error) {
       console.error('Download failed', error);
+      if (isVideo && photo.videoUrl) {
+         window.open(photo.videoUrl, '_blank');
+      } else {
+         window.open(photo.src.original, '_blank');
+      }
     }
   };
 
@@ -62,7 +69,7 @@ const WallpaperCard = ({ photo, onClick }: WallpaperCardProps) => {
       {!imageLoaded && <div className="skeleton card-skeleton" />}
       
       <img
-        src={photo.src.large}
+        src={photo.src.medium}
         alt={photo.alt || 'Wallpaper'}
         className={`wallpaper-image ${imageLoaded ? 'loaded' : ''}`}
         loading="lazy"
@@ -72,8 +79,9 @@ const WallpaperCard = ({ photo, onClick }: WallpaperCardProps) => {
       {imageLoaded && (
         <>
           <div className="card-badges">
-            {is4K && <span className="badge badge-4k">4K</span>}
-            {isHD && <span className="badge badge-hd">HD</span>}
+            {isVideo && <span className="badge badge-video" style={{display: 'flex', alignItems: 'center', gap: '4px'}}><Play size={12}/> Live</span>}
+            {is4K && !isVideo && <span className="badge badge-4k">4K</span>}
+            {isHD && !isVideo && <span className="badge badge-hd">HD</span>}
             {isAmoled && <span className="badge badge-amoled">AMOLED</span>}
           </div>
 

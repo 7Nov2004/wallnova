@@ -1,11 +1,11 @@
-import { PexelsPhoto } from '../api/pexels';
+import { Wallpaper } from '../types';
 import WallpaperCard from './WallpaperCard';
 import './WallpaperGrid.css';
 
 interface WallpaperGridProps {
-  photos: PexelsPhoto[];
+  photos: Wallpaper[];
   loading: boolean;
-  onPhotoClick: (photo: PexelsPhoto) => void;
+  onPhotoClick: (photo: Wallpaper) => void;
   hasMore: boolean;
   loadMore: () => void;
 }

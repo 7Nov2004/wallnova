@@ -4,12 +4,12 @@ import { Heart } from 'lucide-react';
 import { useStore } from '../store';
 import WallpaperGrid from '../components/WallpaperGrid';
 import PreviewModal from '../components/PreviewModal';
-import { PexelsPhoto } from '../api/pexels';
+import { Wallpaper } from '../types';
 import './Page.css'; // Reusing Page.css for standard layout
 
 const Favorites = () => {
   const favorites = useStore(state => state.favorites);
-  const [selectedPhoto, setSelectedPhoto] = useState<PexelsPhoto | null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<Wallpaper | null>(null);
 
   return (
     <motion.div 

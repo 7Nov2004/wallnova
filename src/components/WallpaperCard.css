@@ -129,3 +129,5 @@
     height: 20px;
   }
 }
+
+.badge-video { background: var(--accent); color: white; }

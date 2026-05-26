@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { PexelsPhoto } from '../api/pexels';
+import { Wallpaper } from '../types';
 
 interface User {
   name: string;
@@ -15,11 +15,11 @@ interface WallnovaState {
   login: (user: User) => void;
   logout: () => void;
 
-  favorites: PexelsPhoto[];
-  toggleFavorite: (photo: PexelsPhoto) => void;
+  favorites: Wallpaper[];
+  toggleFavorite: (photo: Wallpaper) => void;
   
-  downloadHistory: PexelsPhoto[];
-  addDownload: (photo: PexelsPhoto) => void;
+  downloadHistory: Wallpaper[];
+  addDownload: (photo: Wallpaper) => void;
 
   searchHistory: string[];
   addSearchHistory: (query: string) => void;

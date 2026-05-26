@@ -4,12 +4,12 @@ import { User, LogOut, Download, Clock } from 'lucide-react';
 import { useStore } from '../store';
 import WallpaperGrid from '../components/WallpaperGrid';
 import PreviewModal from '../components/PreviewModal';
-import { PexelsPhoto } from '../api/pexels';
+import { Wallpaper } from '../types';
 import './Page.css'; 
 
 const Profile = () => {
   const { user, login, logout, downloadHistory, clearSearchHistory } = useStore();
-  const [selectedPhoto, setSelectedPhoto] = useState<PexelsPhoto | null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<Wallpaper | null>(null);
   
   // Mock login state
   const [email, setEmail] = useState('');

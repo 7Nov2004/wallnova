@@ -9,7 +9,7 @@ interface FilterBarProps {
   onOrientationChange: (ori: string) => void;
 }
 
-const CATEGORIES = ['All', 'Nature', 'Abstract', 'Minimal', 'City', 'Space', 'Dark', 'Cyberpunk', 'Aesthetic', 'Neon'];
+const CATEGORIES = ['All', 'Live Wallpapers', 'Nature', 'Abstract', 'Minimal', 'City', 'Space', 'Dark', 'Cyberpunk', 'Aesthetic', 'Neon'];
 
 const FilterBar = ({ currentCategory, currentOrientation, onCategoryChange, onOrientationChange }: FilterBarProps) => {
   return (

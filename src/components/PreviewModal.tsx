@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { PexelsPhoto } from '../api/pexels';
+import { Wallpaper } from '../types';
 import { X, Download, Camera, Image as ImageIcon, Heart, Share2, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../store';
@@ -30,7 +30,7 @@ const PinterestIcon = () => (
 );
 
 interface PreviewModalProps {
-  photo: PexelsPhoto | null;
+  photo: Wallpaper | null;
   onClose: () => void;
 }
 
@@ -62,12 +62,14 @@ const PreviewModal = ({ photo, onClose }: PreviewModalProps) => {
     if (!photo) return;
     setIsDownloading(true);
     try {
-      const response = await fetch(photo.src.original);
+      const isVideo = photo.type === 'video';
+      const urlToDownload = isVideo && photo.videoUrl ? photo.videoUrl : photo.src.original;
+      const response = await fetch(urlToDownload);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `wallnova-${photo.id}.jpg`;
+      a.download = `wallnova-${photo.id}.${isVideo ? 'mp4' : 'jpg'}`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -75,7 +77,12 @@ const PreviewModal = ({ photo, onClose }: PreviewModalProps) => {
       
       addDownload(photo);
     } catch (error) {
-      window.open(photo.src.original, '_blank');
+      const isVideo = photo.type === 'video';
+      if (isVideo && photo.videoUrl) {
+        window.open(photo.videoUrl, '_blank');
+      } else {
+        window.open(photo.src.original, '_blank');
+      }
     } finally {
       setIsDownloading(false);
     }
@@ -126,11 +133,23 @@ const PreviewModal = ({ photo, onClose }: PreviewModalProps) => {
             
             <div className="modal-body">
               <div className="preview-image-container" style={{ backgroundColor: photo.avg_color }}>
-                <img 
-                  src={photo.src.large2x} 
-                  alt={photo.alt || 'Wallpaper Preview'} 
-                  className="preview-image"
-                />
+                {photo.type === 'video' && photo.videoUrl ? (
+                  <video 
+                    src={photo.videoUrl} 
+                    className="preview-image"
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline
+                    poster={photo.src.large2x}
+                  />
+                ) : (
+                  <img 
+                    src={photo.src.large2x} 
+                    alt={photo.alt || 'Wallpaper Preview'} 
+                    className="preview-image"
+                  />
+                )}
               </div>
               
               <div className="modal-info">

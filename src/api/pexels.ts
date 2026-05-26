@@ -32,7 +32,7 @@ export interface PexelsResponse {
   prev_page?: string;
 }
 
-const API_KEY = import.meta.env.VITE_PEXELS_API_KEY;
+const API_KEY = import.meta.env.VITE_PEXELS_API_KEY || '37xbdtA7Wt7CI5PaPP2Rv1KUHytAEafC2fqvawIjQOP10GqZozU7eQ6U';
 const BASE_URL = 'https://api.pexels.com/v1';
 
 const headers = {

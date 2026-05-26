@@ -47,7 +47,7 @@ export interface PixabayVideo {
   userImageURL: string;
 }
 
-const API_KEY = import.meta.env.VITE_PIXABAY_API_KEY;
+const API_KEY = import.meta.env.VITE_PIXABAY_API_KEY || '56028008-375b40d888b2f4ad7e1186b84';
 const BASE_URL = 'https://pixabay.com/api';
 
 const mapImageToWallpaper = (image: PixabayImage): Wallpaper => ({
@@ -79,9 +79,9 @@ const mapVideoToWallpaper = (video: PixabayVideo): Wallpaper => {
     photographer_url: `https://pixabay.com/users/${video.user}-${video.user_id}/`,
     avg_color: '#333333',
     src: {
-      original: `https://i.vimeocdn.com/video/${video.picture_id}_640x360.jpg`, // Fallback thumbnail
-      large2x: `https://i.vimeocdn.com/video/${video.picture_id}_640x360.jpg`,
-      medium: `https://i.vimeocdn.com/video/${video.picture_id}_640x360.jpg`,
+      original: (videoData as any).thumbnail || `https://i.vimeocdn.com/video/${video.picture_id}_640x360.jpg`,
+      large2x: (videoData as any).thumbnail || `https://i.vimeocdn.com/video/${video.picture_id}_640x360.jpg`,
+      medium: (videoData as any).thumbnail || `https://i.vimeocdn.com/video/${video.picture_id}_640x360.jpg`,
     },
     alt: video.tags,
     provider: 'pixabay',

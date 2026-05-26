@@ -225,8 +225,9 @@
   .modal-info {
     border-left: none;
     border-top: 1px solid var(--glass-border);
-    padding: 24px 20px 100px; /* Extra padding at bottom for nav/scroll */
+    padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
     flex: 1;
+    overflow-y: auto;
   }
   
   .close-btn {
@@ -237,10 +238,10 @@
   }
   
   .download-btn {
-    position: sticky;
-    bottom: 20px;
-    z-index: 10;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    margin-top: auto;
+    padding: 14px;
+    font-size: 1rem;
+    width: 100%;
   }
 }
 

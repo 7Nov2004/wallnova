@@ -81,9 +81,15 @@ const PreviewModal = ({ photo, onClose }: PreviewModalProps) => {
     }
   };
 
+  const getShareableLink = () => {
+    if (!photo) return window.location.href;
+    const baseUrl = window.location.origin + window.location.pathname;
+    return `${baseUrl}?photo=${photo.id}`;
+  };
+
   const handleCopyLink = () => {
     if (photo) {
-      navigator.clipboard.writeText(photo.url);
+      navigator.clipboard.writeText(getShareableLink());
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
@@ -93,7 +99,7 @@ const PreviewModal = ({ photo, onClose }: PreviewModalProps) => {
     setShowShareMenu(!showShareMenu);
   };
 
-  const shareUrl = encodeURIComponent(photo?.url || '');
+  const shareUrl = encodeURIComponent(getShareableLink());
   const shareText = encodeURIComponent('Check out this awesome wallpaper from WallNova!');
 
   return (

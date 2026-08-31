@@ -6,8 +6,14 @@ import WallpaperGrid from '../components/WallpaperGrid';
 import PreviewModal from '../components/PreviewModal';
 import { Wallpaper } from '../types';
 import './Page.css'; // Reusing Page.css for standard layout
+import { useSEO } from '../hooks/useSEO';
 
 const Favorites = () => {
+  useSEO({
+    title: 'Your Favorites - WallNova',
+    description: 'View and manage your saved and favorite wallpapers on WallNova.'
+  });
+
   const favorites = useStore(state => state.favorites);
   const [selectedPhoto, setSelectedPhoto] = useState<Wallpaper | null>(null);
 

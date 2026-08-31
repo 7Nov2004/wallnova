@@ -1,8 +1,14 @@
 import { motion } from 'framer-motion';
 import { Mail, Send, User, MessageSquare } from 'lucide-react';
 import './Page.css';
+import { useSEO } from '../hooks/useSEO';
 
 const Contact = () => {
+  useSEO({
+    title: 'Contact Us - WallNova',
+    description: 'Get in touch with the WallNova team. Have a question or feedback? We would love to hear from you.'
+  });
+
   return (
     <motion.div 
       className="container page-container"

@@ -70,7 +70,7 @@ const WallpaperCard = ({ photo, onClick }: WallpaperCardProps) => {
       
       <img
         src={photo.src.medium}
-        alt={photo.alt || 'Wallpaper'}
+        alt={photo.alt || `Premium ${is4K ? '4K ' : ''}${isHD && !is4K ? 'HD ' : ''}Wallpaper by ${photo.photographer}`}
         className={`wallpaper-image ${imageLoaded ? 'loaded' : ''}`}
         loading="lazy"
         onLoad={() => setImageLoaded(true)}

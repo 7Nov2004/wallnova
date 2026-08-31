@@ -6,8 +6,14 @@ import WallpaperGrid from '../components/WallpaperGrid';
 import PreviewModal from '../components/PreviewModal';
 import { Wallpaper } from '../types';
 import './Page.css'; 
+import { useSEO } from '../hooks/useSEO';
 
 const Profile = () => {
+  useSEO({
+    title: 'Your Profile & Downloads - WallNova',
+    description: 'Manage your WallNova profile, view your download history, and sync your wallpaper preferences.'
+  });
+
   const { user, login, logout, downloadHistory, clearSearchHistory } = useStore();
   const [selectedPhoto, setSelectedPhoto] = useState<Wallpaper | null>(null);
   

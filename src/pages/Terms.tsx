@@ -1,6 +1,12 @@
 import './Page.css';
+import { useSEO } from '../hooks/useSEO';
 
 const Terms = () => {
+  useSEO({
+    title: 'Terms of Service - WallNova',
+    description: 'Read the terms of service for using WallNova. Information regarding image usage rights and user conduct.'
+  });
+
   return (
     <div className="container page-container animate-fade-in">
       <div className="glass-panel page-content">

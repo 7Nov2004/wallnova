@@ -1,6 +1,12 @@
 import './Page.css';
+import { useSEO } from '../hooks/useSEO';
 
 const PrivacyPolicy = () => {
+  useSEO({
+    title: 'Privacy Policy - WallNova',
+    description: 'Read the privacy policy of WallNova. Learn how we handle your data and respect your privacy.'
+  });
+
   return (
     <div className="container page-container animate-fade-in">
       <div className="glass-panel page-content">

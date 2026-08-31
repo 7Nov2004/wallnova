@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://wallnova.vercel.app/sitemap.xml
+Sitemap: https://wallnova-sigma.vercel.app/sitemap.xml
